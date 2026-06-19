@@ -132,7 +132,7 @@
       try {
         parsedUrl = new URL(evidence);
       } catch {
-        alert('Evidence URL must be a valid HTTPS URL.');
+        alert('Evidence URL format is invalid.');
         return;
       }
       if (parsedUrl.protocol !== 'https:') {
