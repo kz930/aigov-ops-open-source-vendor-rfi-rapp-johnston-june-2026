@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Safe-RFI Vendor Advisor</title>
+  <meta name="description" content="Safe-RFI vendor advisor for evidence-oriented AI governance stack decisions." />
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --panel: #ffffff;
+      --text: #131a2d;
+      --muted: #4a5878;
+      --line: #d5deeb;
+      --accent: #1f5eff;
+      --chip: #edf2ff;
+      --ok: #0d6f3d;
+    }
+    html[data-theme='dark'] {
+      --bg: #0d1321;
+      --panel: #131d31;
+      --text: #e9efff;
+      --muted: #b9c7ea;
+      --line: #2a3752;
+      --accent: #86a8ff;
+      --chip: #1a2743;
+      --ok: #7dd6a5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15.5px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+    h1 { margin: 0.15rem 0 0.25rem; font-size: clamp(1.55rem, 3vw, 2.25rem); }
+    h2 { margin-top: 0; font-size: 1.1rem; }
+    p, li { color: var(--text); }
+    .muted { color: var(--muted); }
+    .controls, .profiles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    button, .chip {
+      border: 1px solid var(--line);
+      background: var(--chip);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 0.4rem 0.8rem;
+      font: inherit;
+    }
+    button:hover, button:focus-visible { border-color: var(--accent); }
+    button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    button.toggle[aria-pressed='true'] { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .profile {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.25rem 0.6rem;
+      background: var(--chip);
+    }
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.8rem;
+    }
+    .cap-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.75rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 0.55rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: color-mix(in oklab, var(--panel), var(--line) 45%); }
+    code, pre {
+      font: 0.86rem/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    pre {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.75rem;
+      background: color-mix(in oklab, var(--panel), black 4%);
+    }
+    .kpi { color: var(--ok); font-weight: 600; }
+    a { color: var(--accent); }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="panel" aria-label="Safe-RFI header">
+      <p class="muted">AIGovOps Foundation experiment</p>
+      <h1>Safe-RFI Vendor RFI Advisor</h1>
+      <p class="muted">Evidence-oriented stack composer for Beacon and Umbrella workflows with future Lantern alignment.</p>
+      <div class="controls" aria-label="Global controls">
+        <button id="themeToggle" class="toggle" aria-pressed="false" aria-label="Toggle light and dark mode">Dark mode</button>
+        <button id="lensBeacon" class="toggle" aria-pressed="true">Beacon lens</button>
+        <button id="lensUmbrella" class="toggle" aria-pressed="false">Umbrella lens</button>
+        <button id="jsonExport" class="primary">Export JSON</button>
+        <button id="yamlExport">Export YAML</button>
+      </div>
+      <p id="lensSummary" class="muted" aria-live="polite"></p>
+    </section>
+
+    <section class="panel" aria-label="Profile toggles">
+      <h2>Profile toggles</h2>
+      <div class="profiles">
+        <label class="profile"><input type="checkbox" data-profile="fortune100" /> Fortune 100 operating model</label>
+        <label class="profile"><input type="checkbox" data-profile="manufacturing" /> Manufacturing &amp; OT sensitivity</label>
+        <label class="profile"><input type="checkbox" data-profile="regulated" /> Regulated deployment</label>
+        <label class="profile"><input type="checkbox" data-profile="oss" /> Open-source friendly</label>
+        <label class="profile"><input type="checkbox" data-profile="runtime" /> Runtime-first</label>
+      </div>
+      <p class="muted" id="profileSummary">No profile modifiers selected.</p>
+    </section>
+
+    <section class="panel" aria-label="Vendor comparison sections">
+      <h2>Vendor comparison</h2>
+      <div id="sections" class="cap-grid"></div>
+    </section>
+
+    <section class="panel" aria-label="Recommended stack">
+      <h2>Recommended stack table</h2>
+      <p class="muted">Deterministically derived from selected lens and profiles.</p>
+      <table>
+        <thead>
+          <tr><th>Capability</th><th>Recommended primary</th><th>Complementary options</th><th>Reasoning</th></tr>
+        </thead>
+        <tbody id="recommendedTable"></tbody>
+      </table>
+    </section>
+
+    <section class="panel" aria-label="Beacon-style unsigned receipt preview">
+      <h2>Beacon-style unsigned receipt preview</h2>
+      <p class="muted">Preview for evidence review and future signing workflows.</p>
+      <pre id="receiptPreview"></pre>
+    </section>
+
+    <section class="panel" aria-label="Auditor value">
+      <h2>Auditor value</h2>
+      <ul>
+        <li>Structured decision artifact, not spreadsheet folklore.</li>
+        <li>Canonical export and deterministic content.</li>
+        <li>Cross-functional traceability for audit, procurement, security, and engineering.</li>
+        <li>Manufacturing-specific gap visibility.</li>
+        <li>Future Lantern diff and Beacon signing path.</li>
+      </ul>
+      <p><a href="../docs/auditor-value.md">Read full auditor value notes</a></p>
+    </section>
+
+    <section class="panel" aria-label="Vendor sponsorship">
+      <h2>Vendor sponsorship</h2>
+      <p>Sponsors help fund ecosystem surfaces, labs, connectors, and evidence tooling. Sponsorship does not buy ranking, approval, hidden weighting changes, or gap suppression.</p>
+      <ul>
+        <li>Community supporter</li>
+        <li>Lab sponsor</li>
+        <li>Integration sponsor</li>
+        <li>Evidence sponsor</li>
+      </ul>
+      <p><strong>Disclosure:</strong> Sponsorship status is disclosed publicly. Recommendations remain criteria-driven and deterministic.</p>
+      <p><a href="../docs/vendor-sponsorship.md">Read sponsorship framework</a></p>
+    </section>
+  </main>
+
+  <script>
+    const vendors = [
+      { name: 'Credo AI', caps: ['audit-discovery', 'policy-authoring', 'dashboards-observability'] },
+      { name: 'IBM watsonx.governance', caps: ['audit-discovery', 'policy-authoring', 'dashboards-observability', 'guardrails'] },
+      { name: 'Styra / OPA', caps: ['policy-authoring', 'gates-controls', 'shipping'] },
+      { name: 'HashiCorp Sentinel', caps: ['policy-authoring', 'gates-controls', 'shipping'] },
+      { name: 'Fiddler AI', caps: ['audit-discovery', 'dashboards-observability', 'guardrails'] },
+      { name: 'NVIDIA NeMo Guardrails', caps: ['guardrails', 'shipping'] },
+      { name: 'Snyk', caps: ['gates-controls', 'dashboards-observability', 'shipping'] },
+      { name: 'Wiz', caps: ['audit-discovery', 'gates-controls', 'dashboards-observability', 'shipping'] }
+    ];
+
+    const capabilityLabels = {
+      'audit-discovery': 'Audit and discovery',
+      'policy-authoring': 'Policy authoring',
+      'gates-controls': 'Gates and controls',
+      'dashboards-observability': 'Dashboards and observability',
+      'guardrails': 'Guardrails',
+      'shipping': 'Shipping'
+    };
+
+    const state = {
+      lens: 'beacon',
+      profiles: {
+        fortune100: false,
+        manufacturing: false,
+        regulated: false,
+        oss: false,
+        runtime: false
+      }
+    };
+
+    const lensSummary = document.getElementById('lensSummary');
+    const sections = document.getElementById('sections');
+    const profileSummary = document.getElementById('profileSummary');
+    const receiptPreview = document.getElementById('receiptPreview');
+    const recommendedTable = document.getElementById('recommendedTable');
+
+    function byCapability(cap) {
+      return vendors.filter(v => v.caps.includes(cap)).map(v => v.name);
+    }
+
+    function recommend(cap, pool) {
+      const profileBoost = state.profiles;
+      let primary = pool[0] || 'No match';
+      let reason = state.lens === 'beacon'
+        ? 'Favors evidence artifact readiness and audit traceability.'
+        : 'Favors policy operations and control enforcement pathways.';
+
+      if (cap === 'guardrails' && profileBoost.runtime && pool.includes('NVIDIA NeMo Guardrails')) {
+        primary = 'NVIDIA NeMo Guardrails';
+        reason = 'Runtime-first profile prioritizes interactive guardrail flow control.';
+      }
+      if (cap === 'policy-authoring' && profileBoost.oss && pool.includes('Styra / OPA')) {
+        primary = 'Styra / OPA';
+        reason = 'Open-source friendly profile emphasizes transparent policy semantics.';
+      }
+      if (cap === 'gates-controls' && profileBoost.regulated && pool.includes('HashiCorp Sentinel')) {
+        primary = 'HashiCorp Sentinel';
+        reason = 'Regulated profile values explicit gate policy integration points.';
+      }
+      if (cap === 'audit-discovery' && profileBoost.fortune100 && pool.includes('IBM watsonx.governance')) {
+        primary = 'IBM watsonx.governance';
+        reason = 'Fortune 100 model favors broad governance portfolio coverage.';
+      }
+      if (cap === 'shipping' && profileBoost.manufacturing && pool.includes('Wiz')) {
+        primary = 'Wiz';
+        reason = 'Manufacturing & OT sensitivity favors strong deployment exposure visibility.';
+      }
+
+      const complements = pool.filter(v => v !== primary).slice(0, 3);
+      return { primary, complements, reason };
+    }
+
+    function currentArtifact() {
+      const profileList = Object.entries(state.profiles).filter(([,v]) => v).map(([k]) => k);
+      const sectionsObj = {};
+      const recommendations = {};
+
+      Object.keys(capabilityLabels).forEach(cap => {
+        const pool = byCapability(cap);
+        sectionsObj[cap] = pool;
+        recommendations[cap] = recommend(cap, pool);
+      });
+
+      return {
+        product: 'Safe-RFI',
+        lens: state.lens,
+        profileToggles: profileList,
+        generatedAt: new Date().toISOString(),
+        deterministicModel: 'v1',
+        sections: sectionsObj,
+        recommendations,
+        receipt: {
+          format: 'beacon-style-preview',
+          signingStatus: 'UNSIGNED',
+          lanternDiffPath: 'planned'
+        },
+        auditorValue: {
+          structuredArtifact: true,
+          canonicalExport: true,
+          crossFunctionalTraceability: true,
+          manufacturingGapVisibility: state.profiles.manufacturing,
+          beaconSigningPath: true
+        },
+        sponsorshipDisclosure: {
+          tiers: ['Community supporter', 'Lab sponsor', 'Integration sponsor', 'Evidence sponsor'],
+          noPaidRanking: true,
+          noHiddenWeighting: true,
+          noGapSuppression: true
+        }
+      };
+    }
+
+    function toYaml(value, indent = 0) {
+      const pad = '  '.repeat(indent);
+      if (Array.isArray(value)) {
+        return value.length
+          ? value.map(item => {
+              if (item && typeof item === 'object') {
+                return `${pad}-\n${toYaml(item, indent + 1)}`;
+              }
+              return `${pad}- ${String(item)}`;
+            }).join('\n')
+          : `${pad}[]`;
+      }
+      if (value && typeof value === 'object') {
+        return Object.keys(value).sort().map(key => {
+          const v = value[key];
+          if (v && typeof v === 'object') {
+            return `${pad}${key}:\n${toYaml(v, indent + 1)}`;
+          }
+          return `${pad}${key}: ${typeof v === 'string' ? JSON.stringify(v) : String(v)}`;
+        }).join('\n');
+      }
+      return `${pad}${String(value)}`;
+    }
+
+    function download(name, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function render() {
+      lensSummary.textContent = state.lens === 'beacon'
+        ? 'Beacon lens active: prioritize receipt-readable governance evidence.'
+        : 'Umbrella lens active: prioritize policy and controls enforcement operations.';
+
+      const activeProfiles = Object.entries(state.profiles)
+        .filter(([, on]) => on)
+        .map(([key]) => key);
+
+      profileSummary.textContent = activeProfiles.length
+        ? `Active modifiers: ${activeProfiles.join(', ')}.`
+        : 'No profile modifiers selected.';
+
+      sections.innerHTML = '';
+      Object.entries(capabilityLabels).forEach(([cap, label]) => {
+        const matches = byCapability(cap);
+        const div = document.createElement('article');
+        div.className = 'cap-card';
+        div.innerHTML = `<h3>${label}</h3><p class="muted">${matches.join(' • ')}</p>`;
+        sections.appendChild(div);
+      });
+
+      recommendedTable.innerHTML = '';
+      Object.entries(capabilityLabels).forEach(([cap, label]) => {
+        const options = byCapability(cap);
+        const rec = recommend(cap, options);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${label}</td>
+          <td><span class="kpi">${rec.primary}</span></td>
+          <td>${rec.complements.join(', ') || '—'}</td>
+          <td>${rec.reason}</td>
+        `;
+        recommendedTable.appendChild(row);
+      });
+
+      const artifact = currentArtifact();
+      receiptPreview.textContent = JSON.stringify({
+        receiptId: `safe-rfi-${Date.now()}`,
+        product: artifact.product,
+        lens: artifact.lens,
+        profileToggles: artifact.profileToggles,
+        recommendations: artifact.recommendations,
+        signingStatus: 'UNSIGNED',
+        note: 'Beacon-style preview for review; signing not applied in this static demo.'
+      }, null, 2);
+    }
+
+    document.querySelectorAll('input[data-profile]').forEach(input => {
+      input.addEventListener('change', () => {
+        state.profiles[input.dataset.profile] = input.checked;
+        render();
+      });
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', (e) => {
+      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      e.currentTarget.setAttribute('aria-pressed', String(next === 'dark'));
+      e.currentTarget.textContent = next === 'dark' ? 'Light mode' : 'Dark mode';
+    });
+
+    document.getElementById('lensBeacon').addEventListener('click', (e) => {
+      state.lens = 'beacon';
+      document.getElementById('lensUmbrella').setAttribute('aria-pressed', 'false');
+      e.currentTarget.setAttribute('aria-pressed', 'true');
+      render();
+    });
+
+    document.getElementById('lensUmbrella').addEventListener('click', (e) => {
+      state.lens = 'umbrella';
+      document.getElementById('lensBeacon').setAttribute('aria-pressed', 'false');
+      e.currentTarget.setAttribute('aria-pressed', 'true');
+      render();
+    });
+
+    document.getElementById('jsonExport').addEventListener('click', () => {
+      const canonical = currentArtifact();
+      download('safe-rfi-export.json', JSON.stringify(canonical, Object.keys(canonical).sort(), 2), 'application/json');
+    });
+
+    document.getElementById('yamlExport').addEventListener('click', () => {
+      const canonical = currentArtifact();
+      download('safe-rfi-export.yaml', toYaml(canonical), 'application/yaml');
+    });
+
+    render();
+  </script>
+</body>
+</html>

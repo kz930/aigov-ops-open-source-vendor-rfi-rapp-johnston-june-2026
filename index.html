@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Safe-RFI | AIGovOps Foundation</title>
+  <meta name="description" content="Safe-RFI is an AIGovOps Foundation experiment for evidence-oriented vendor RFI workflows aligned to Beacon and Umbrella." />
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --text: #172033;
+      --muted: #4d5a74;
+      --border: #d6deea;
+      --accent: #1f5eff;
+      --accent-2: #123db3;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1525;
+        --panel: #121b2f;
+        --text: #e8eefc;
+        --muted: #b5c4ea;
+        --border: #283551;
+        --accent: #7ea2ff;
+        --accent-2: #a6beff;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg), color-mix(in oklab, var(--bg), black 6%));
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 1.25rem; }
+    header { padding: 3.5rem 0 2rem; }
+    h1 { font-size: clamp(2rem, 4vw, 3.15rem); margin: 0 0 0.5rem; line-height: 1.15; }
+    p { margin: 0.5rem 0; }
+    .lede { color: var(--muted); font-size: 1.08rem; max-width: 70ch; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem;
+    }
+    .card h2 { font-size: 1.1rem; margin-top: 0; }
+    a {
+      color: var(--accent);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.14em;
+    }
+    a:hover, a:focus-visible { color: var(--accent-2); }
+    .cta {
+      display: inline-block;
+      margin-top: 1rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 0.62rem 1rem;
+    }
+    .cta:hover, .cta:focus-visible { background: var(--accent-2); color: #fff; }
+    footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 1rem 0 2.5rem;
+      margin-top: 2rem;
+    }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <p><strong>AIGovOps Foundation</strong></p>
+      <h1>Safe-RFI</h1>
+      <p class="lede">Safe-RFI is an open-source experiment that turns AI governance vendor evaluation into deterministic, evidence-oriented artifacts. It is designed to align with Beacon workflow evidence and Umbrella policy operations, with future Lantern diff pathways.</p>
+      <a class="cta" href="webapp/index.html">Open Safe-RFI Webapp</a>
+    </header>
+
+    <section class="grid" aria-label="Project links">
+      <article class="card">
+        <h2>Vendor RFI Advisor</h2>
+        <p>Use profile toggles and workflow lenses to compare governance and assurance stacks.</p>
+        <p><a href="webapp/index.html">Launch advisor</a></p>
+      </article>
+      <article class="card">
+        <h2>Auditor Value</h2>
+        <p>See how Safe-RFI supports canonical evidence, traceability, and manufacturing-specific gap reporting.</p>
+        <p><a href="docs/auditor-value.md">Read auditor value notes</a></p>
+      </article>
+      <article class="card">
+        <h2>Vendor Sponsorship</h2>
+        <p>Review neutral governance and sponsor disclosure language for ecosystem funding.</p>
+        <p><a href="docs/vendor-sponsorship.md">Read sponsorship model</a></p>
+      </article>
+      <article class="card">
+        <h2>Deployment</h2>
+        <p>Publish through GitHub Pages from the static webapp directory with no framework requirements.</p>
+        <p><a href="docs/deployment.md">Deployment documentation</a></p>
+      </article>
+    </section>
+
+    <section class="card" aria-label="Program framing">
+      <h2>Beacon • Umbrella • Lantern</h2>
+      <p>Safe-RFI provides front-end decision support for Beacon receipt-oriented workflows and Umbrella control alignment. The output format is built to support future Lantern differencing and change reporting once those paths are enabled.</p>
+    </section>
+
+    <footer>
+      <p>Safe-RFI is a public AIGovOps Foundation experiment in transparent, open-source AI governance procurement practices.</p>
+    </footer>
+  </main>
+</body>
+</html>
