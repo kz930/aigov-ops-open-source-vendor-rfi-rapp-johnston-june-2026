@@ -1,82 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AIGovOps Vendor RFI — Stack Composer & Evidence Receipt</title>
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-/* AIGovOps "deep ocean governance" brand — shared with Beacon & Umbrella (teal = Beacon signal) */
-:root{--bg:#0e141b;--bg2:#0b1017;--card:#141c24;--ink:#e2e7e9;--muted:#7e919a;
-  --accent:#14b393;--accent-700:#0f8e74;--border:#2a333c;
-  --ok:#14b393;--warn:#faaf2e;--gap:#d74242;--radius:8px;
-  --font:'Satoshi','General Sans',system-ui,Segoe UI,Roboto,Arial,sans-serif;
-  --mono:'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace}
-*{box-sizing:border-box}body{margin:0;font-family:var(--font);background:var(--bg);color:var(--ink);line-height:1.5}
-header{padding:26px 20px;border-top:3px solid var(--accent);border-bottom:1px solid var(--border)}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 8px}
-h1{margin:0 0 6px;font-size:22px;font-weight:700;letter-spacing:-.01em}.sub{color:var(--muted);font-size:14px}
-main{max-width:1000px;margin:0 auto;padding:24px 20px}.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin:16px 0}
-table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}th{color:var(--muted);font-weight:600}
-.badge{padding:2px 8px;border-radius:12px;font-size:12px;font-weight:600}.ready{background:rgba(20,179,147,.15);color:var(--ok)}.integrate{background:rgba(250,175,46,.16);color:var(--warn)}.gap{background:rgba(215,66,66,.16);color:var(--gap)}
-label{display:block;margin:6px 0;font-size:14px}
-button{background:var(--accent);color:#06231d;border:0;border-radius:6px;padding:9px 16px;font-family:var(--font);font-weight:700;cursor:pointer}button:hover{background:var(--accent-700)}
-pre{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;overflow:auto;font-size:12px;font-family:var(--mono);color:var(--ink)}
-.unsigned{color:var(--warn);font-size:12px}h2{font-size:16px;border-bottom:1px solid var(--border);padding-bottom:6px;font-weight:600}
-a{color:var(--accent)}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIGovOps Open Source Vendor RFI</title>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* AIGovOps "deep ocean governance" brand — shared with Beacon & Umbrella (teal = Beacon signal) */
+    :root{--bg:#0e141b;--surface:#141c24;--surface2:#192330;--border:#2a333c;--text:#e2e7e9;--muted:#7e919a;
+      --primary:#14b393;--primary2:#0f8e74;--radius:16px;--shadow:0 12px 32px rgba(0,0,0,.35);
+      --font:'Satoshi','General Sans',system-ui,Segoe UI,Roboto,Arial,sans-serif;
+      --mono:'JetBrains Mono','Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace}
+    *{box-sizing:border-box} body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.55} a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 80px}
+    .hero{padding:48px 0 28px;border-top:3px solid var(--primary)}
+    .eyebrow{font-family:var(--mono);text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--primary);font-weight:500}
+    h1{font-size:clamp(2rem,4vw,3.6rem);line-height:1.04;margin:.5rem 0 1rem;letter-spacing:-.01em} h2{font-size:1.15rem;margin:0 0 .5rem}
+    p{max-width:72ch;color:var(--text)} .muted,.small{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1.25fr .95fr;gap:24px;margin-top:8px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+    .btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+    .btn{display:inline-block;padding:13px 18px;border-radius:12px;text-decoration:none;border:1px solid var(--border);font-weight:700;background:var(--surface2);color:var(--text)}
+    .btn:hover{border-color:var(--primary)}
+    .btn.primary{background:var(--primary);color:#06231d;border-color:var(--primary)} .btn.primary:hover{background:var(--primary2)}
+    .stack{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+    .stack .card strong{color:var(--primary)} .small{font-size:14px}
+    @media (max-width:900px){.grid,.stack{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-<header>
-<p class="eyebrow">AiGovOps Foundation · Beacon × Umbrella</p>
-<h1>AIGovOps Vendor RFI — Stack Composer & Evidence Receipt</h1>
-<div class="sub">Beacon lens: unsigned evidence-receipt preview · Umbrella lens: vendor stack composer. Neutral, evidence-oriented, gap-aware.</div>
-</header>
-<main>
-<section class="card">
-<h2>1. Risk profile</h2>
-<label><input type="checkbox" id="p_reg"> Regulated / Fortune-100 manufacturing</label>
-<label><input type="checkbox" id="p_ot"> OT / IIoT environment (SCADA, DCS)</label>
-<label><input type="checkbox" id="p_vpc"> In-VPC / on-prem model scoring required</label>
-</section>
-<section class="card">
-<h2>2. Recommended three-layer stack</h2>
-<table>
-<tr><th>Layer</th><th>Default vendors</th><th>Status</th></tr>
-<tr><td>Compliance control plane (audit, policy library, dashboards)</td><td>Credo AI + IBM watsonx.governance</td><td><span class="badge ready">Ready</span></td></tr>
-<tr><td>Policy-as-code engine (gates, CI/CD, infra)</td><td>OPA / Styra DAS + HashiCorp Sentinel</td><td><span class="badge ready">Ready</span></td></tr>
-<tr><td>Runtime guardrails & agent observability</td><td>Fiddler AI + NVIDIA NeMo Guardrails</td><td><span class="badge integrate">Integrate</span></td></tr>
-<tr><td>Shipping the code (SCA, IaC scan)</td><td>Snyk / Wiz</td><td><span class="badge integrate">Integrate</span></td></tr>
-<tr><td>OT / IIoT governance</td><td>Claroty / Dragos / Nozomi</td><td><span class="badge gap">Gap</span></td></tr>
-</table>
-</section>
-<section class="card">
-<h2>3. Auditor value</h2>
-<p class="sub">Evidence-oriented vendor decisions: structured decision records, canonical exports, hash preview, cross-functional traceability, explicit gap visibility — not a single synthetic score. See <a href="auditor-value.md">auditor-value.md</a>.</p>
-</section>
-<section class="card">
-<h2>4. Vendor sponsorship</h2>
-<p class="sub">Sponsor the surface, not the score. Vendors may support labs, events, and tooling; they cannot buy ranking, hide gaps, or alter weighting. See <a href="vendor-sponsorship.md">vendor-sponsorship.md</a>.</p>
-</section>
-<section class="card">
-<h2>5. Evidence receipt preview <span class="unsigned">(UNSIGNED PREVIEW — not a Beacon attestation)</span></h2>
-<button onclick="gen()">Generate receipt</button>
-<pre id="out">{}</pre>
-</section>
-</main>
-<script>
-async function sha256(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
-async function gen(){
-const profile={regulated:p_reg.checked,ot:p_ot.checked,inVpc:p_vpc.checked};
-const body={schema:'aigovops.vendor-rfi/v0.1',generated:new Date().toISOString(),profile,stack:[{layer:'compliance',vendors:['Credo AI','IBM watsonx.governance'],status:'ready'},{layer:'policy-as-code',vendors:['OPA/Styra DAS','HashiCorp Sentinel'],status:'ready'},{layer:'runtime-guardrails',vendors:['Fiddler AI','NVIDIA NeMo Guardrails'],status:'integrate'},{layer:'ship-code',vendors:['Snyk','Wiz'],status:'integrate'},{layer:'ot-iiot',vendors:['Claroty','Dragos','Nozomi'],status:'gap'}]};
-const canonical=JSON.stringify(body,Object.keys(body).sort());
-const hash=await sha256(canonical);
-out.textContent=JSON.stringify({receipt:body,evidence_sha256:hash,signature:null,note:'Unsigned preview. Sign via Beacon (Ed25519+JCS) before use as audit evidence.'},null,2);
-}
-</script>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">AiGovOps Foundation · Beacon × Umbrella</div>
+      <h1>Open-source vendor RFI for AI governance that runs like engineering.</h1>
+      <p>This repository packages a static webapp, deployment workflow, auditor-facing value model, and vendor sponsorship design so the Foundation can publish a neutral, evidence-oriented market surface instead of a static vendor list.</p>
+      <div class="btns">
+        <a class="btn primary" href="./vendor-rfi-advisor.html">Open webapp</a>
+        <a class="btn" href="./docs/vendor-guide.md">Vendor guide</a>
+        <a class="btn" href="./docs/auditor-value.md">Auditor value</a>
+        <a class="btn" href="./docs/vendor-sponsorship.md">Vendor sponsorship</a>
+        <a class="btn" href="./README.md">Repo guide</a>
+      </div>
+    </section>
+    <section class="grid">
+      <div class="card">
+        <h2>What this gives auditors</h2>
+        <p>Not just screenshots and claims. The design centers on portable decision artifacts, profile-based rationale, deterministic exports, and a future path to Beacon-signed evidence that procurement, audit, and engineering can all inspect.</p>
+      </div>
+      <div class="card">
+        <h2>What this gives vendors</h2>
+        <p>A structured way to explain fit, gaps, interoperability, and sponsor participation without collapsing Foundation neutrality. Vendors can support the ecosystem while the Foundation preserves open evaluation logic.</p>
+      </div>
+    </section>
+    <section class="stack">
+      <div class="card"><strong>Beacon</strong><p class="small">Unsigned evidence preview today, signed receipts later.</p></div>
+      <div class="card"><strong>Umbrella</strong><p class="small">Stack composer for procurement, architecture, and control design.</p></div>
+      <div class="card"><strong>Lantern</strong><p class="small">Future diff, CLI, and PR evidence reader for ongoing governance.</p></div>
+    </section>
+  </div>
 </body>
 </html>
