@@ -298,6 +298,13 @@
       };
     }
 
+    function yamlScalar(v) {
+      if (v === null) return 'null';
+      if (typeof v === 'boolean') return v ? 'true' : 'false';
+      if (typeof v === 'number') return Number.isFinite(v) ? String(v) : 'null';
+      return JSON.stringify(String(v));
+    }
+
     function toYaml(value, indent = 0) {
       const pad = '  '.repeat(indent);
       if (Array.isArray(value)) {
@@ -316,10 +323,10 @@
           if (v && typeof v === 'object') {
             return `${pad}${key}:\n${toYaml(v, indent + 1)}`;
           }
-          return `${pad}${key}: ${typeof v === 'string' ? JSON.stringify(v) : String(v)}`;
+          return `${pad}${key}: ${yamlScalar(v)}`;
         }).join('\n');
       }
-      return `${pad}${String(value)}`;
+      return `${pad}${yamlScalar(value)}`;
     }
 
     function download(name, content, type) {
@@ -332,12 +339,16 @@
       URL.revokeObjectURL(url);
     }
 
-    function stableStringify(value) {
-      if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
+    function stableSort(value) {
+      if (Array.isArray(value)) return value.map(stableSort);
       if (value && typeof value === 'object') {
-        return `{${Object.keys(value).sort().map(k => `${JSON.stringify(k)}:${stableStringify(value[k])}`).join(',')}}`;
+        const out = {};
+        Object.keys(value).sort().forEach(k => {
+          out[k] = stableSort(value[k]);
+        });
+        return out;
       }
-      return JSON.stringify(value);
+      return value;
     }
 
     function render() {
@@ -419,7 +430,7 @@
 
     document.getElementById('jsonExport').addEventListener('click', () => {
       const canonical = currentArtifact();
-      download('safe-rfi-export.json', JSON.stringify(JSON.parse(stableStringify(canonical)), null, 2), 'application/json');
+      download('safe-rfi-export.json', JSON.stringify(stableSort(canonical), null, 2), 'application/json');
     });
 
     document.getElementById('yamlExport').addEventListener('click', () => {

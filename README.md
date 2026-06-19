@@ -20,7 +20,7 @@ Safe-RFI uses neutral sponsorship governance. Sponsors can fund ecosystem surfac
 
 ## Quick links
 
-- Landing page: `index.html`
-- Webapp: `webapp/index.html`
-- Auditor value: `docs/auditor-value.md`
-- Vendor sponsorship: `docs/vendor-sponsorship.md`
+- [Landing page](index.html)
+- [Webapp](webapp/index.html)
+- [Auditor value](docs/auditor-value.md)
+- [Vendor sponsorship](docs/vendor-sponsorship.md)
