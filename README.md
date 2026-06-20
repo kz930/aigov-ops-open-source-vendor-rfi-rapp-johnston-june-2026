@@ -27,6 +27,8 @@ The advisor's vendor data and recommendation logic are derived from `docs/vendor
 
 - `index.html` — overview / landing
 - `training.html` — interactive audit-training tool (lessons + knowledge check + self-audit + completion receipt)
+- `comparison.html` — side-by-side comparison of 50 (2026) AI-governance vendors across 5 categories
+- `vendors-data.js` — the vendor dataset (single source of truth, maintained by aigovops-agent-vendor-rfi)
 - `vendor-rfi-advisor.html` — the advisor webapp (profiles → stack → recommendation → receipt)
 - `docs/vendor-guide.md` — AI Governance Policy-as-Code Vendor Guide for Fortune 100 Manufacturing (source content)
 - `docs/auditor-value.md` — evidence-oriented auditor value model
